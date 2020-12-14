@@ -76,7 +76,7 @@
 - **403**: Forbidden
 - **404**: Not found
 - **429**: Too Many Requests
-- **500**: Server Error
+- **500**: Internal Server Error
 
 ## Other status codes
 
@@ -86,7 +86,7 @@
 - **405**: Method Not Allowed
 - **406**: Not Acceptable
 - **409**: Conflict
-- **503**: Service Unavaiabled
+- **503**: Service Unavaiable
 
 ## Status code ranges
 

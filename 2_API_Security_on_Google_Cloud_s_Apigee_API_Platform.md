@@ -71,15 +71,15 @@
   - Client Credentials
 
     - Service to Service (No user data involved)
-    - For onfidential clients
+    - For confidential clients
     - **POST /token** -> Apigee Proxy
       - Headers:
-        ````json
-          {
-            "Authorization": "Basic {Base64(client_id:client_secret)}",
-            "Content-Type": "x-www-form-urlencoded"
-          }```
-        ````
+        ```json
+        {
+          "Authorization": "Basic {Base64(client_id:client_secret)}",
+          "Content-Type": "x-www-form-urlencoded"
+        }
+        ```
       - Payload (Form parameters):
         ```json
         {
@@ -87,7 +87,7 @@
           "scope": "{scope}"
         }
         ```
-    - Response from **POSt /token**
+    - Response from **POST /token**
       - Returns:
         ```json
         {
@@ -114,18 +114,16 @@
     - **POST /token** -> Apigee Proxy
 
       - Headers:
-        ````json
-          {
-            "Authorization": "Basic {Base64(client_id:client_secret)}",
-            "Content-Type": "x-www-form-urlencoded"
-          }```
-        ````
+        ```json
+        {
+          "Authorization": "Basic {Base64(username:password)}",
+          "Content-Type": "x-www-form-urlencoded"
+        }
+        ```
       - Payload (Form parameters):
         ```json
         {
           "grant_type": "password",
-          "username": "{username}",
-          "password": "{password}",
           "scope": "{scope}"
         }
         ```
@@ -159,11 +157,11 @@
     - **GET /resource** -> Backend
 
       - Headers:
-        ````json
-          {
-            "Authorization": "Bearer {access_token}"
-          }```
-        ````
+        ```json
+        {
+          "Authorization": "Bearer {access_token}"
+        }
+        ```
 
   - Authorization Code:
 
@@ -180,7 +178,6 @@
         ```json
         {
           "response_type": "code",
-          "client_id": "{client_id}",
           "redirect_uri": "{redirect_uri}",
           "scope": "{scope}",
           "state": "{state}"
@@ -195,8 +192,8 @@
 
     - **User authentification in browser**: -> Authorization server
 
-      - User enters credentials in displayed login_page
-      - User provides consent in consent_page
+      - User enters credentials in displayed **login_page**
+      - User provides consent in **consent_page**
 
     - **POST /oauth/authcode** -> Apigee proxy (from Authorization server)
 
@@ -219,12 +216,12 @@
     - **POST /token** -> Apigee Proxy
 
       - Headers:
-        ````json
-          {
-            "Authorization": "Basic {Base64(client_id:client_secret)}",
-            "Content-Type": "x-www-form-urlencoded"
-          }```
-        ````
+        ```json
+        {
+          "Authorization": "Basic {Base64(client_id:client_secret)}",
+          "Content-Type": "x-www-form-urlencoded"
+        }
+        ```
       - Payload (Form parameters):
 
         ```json
@@ -249,11 +246,11 @@
     - **GET /resource** -> Backend
 
       - Headers:
-        ````json
-          {
-            "Authorization": "Bearer {access_token}"
-          }```
-        ````
+        ```json
+        {
+          "Authorization": "Bearer {access_token}"
+        }
+        ```
 
   - Authorization Code with PKCE (Proof Key for Code Exchange):
 
@@ -267,8 +264,8 @@
     - App generates PKCE
 
       - `code_verifier` (cryptographically random number)
-      - `code_challenge` (base64 urlencoded string of SHA56 has of code_verifier)
-      - `code_verifier` is stored in session
+      - `code_challenge` (base64 urlencoded string of SHA56 hash of code_verifier)
+      - code_verifier is stored in session
 
     - **GET /oauth/authorize** -> Apigee Proxy
 
@@ -293,8 +290,8 @@
 
     - **User authentification in browser**: -> Authorization server
 
-      - User enters credentials in displayed login_page
-      - User provides consent in consent_page
+      - User enters credentials in displayed **login_page**
+      - User provides consent in **consent_page**
 
     - **POST /oauth/authcode** -> Apigee proxy (from Authorization server)
 
@@ -317,11 +314,11 @@
     - **POST /token** -> Apigee Proxy
 
       - Headers: (No client_secret with PKCE so no auth header, add client_id as a form parameter)
-        ````json
-          {
-            "Content-Type": "x-www-form-urlencoded"
-          }```
-        ````
+        ```json
+        {
+          "Content-Type": "x-www-form-urlencoded"
+        }
+        ```
       - Payload (Form parameters):
 
         ```json
@@ -348,11 +345,11 @@
     - **GET /resource** -> Backend
 
       - Headers:
-        ````json
-          {
-            "Authorization": "Bearer {access_token}"
-          }```
-        ````
+        ```json
+        {
+          "Authorization": "Bearer {access_token}"
+        }
+        ```
 
   - Implicit:
     - Designed for public web & mobile apps
@@ -364,12 +361,12 @@
   - **POST /token** -> Apigee Proxy
 
     - Headers: (no auth header with PKCE)
-      ````json
-        {
-          "Authorization": "Basic {Base64(client_id:client_secret)}",
-          "Content-Type": "x-www-form-urlencoded"
-        }```
-      ````
+      ```json
+      {
+        "Authorization": "Basic {Base64(client_id:client_secret)}",
+        "Content-Type": "x-www-form-urlencoded"
+      }
+      ```
     - Payload (Form parameters):
       add client_id with PKCE
 
@@ -394,11 +391,11 @@
   - **GET /resource** -> Backend
 
     - Headers:
-      ````json
-        {
-          "Authorization": "Bearer {access_token}"
-        }```
-      ````
+      ```json
+      {
+        "Authorization": "Bearer {access_token}"
+      }
+      ```
 
 - Client ids and client secrets: used to identify and authenticate apps
 
@@ -418,8 +415,8 @@
 - JWT (JSON Web Token)
 
   - Digitally signed
-  - Decoded locally (doesnt need network trip) so valuable for microservices
-  - Thus can not be revoke => Keep TTL (Time To Live) fairly short
+  - Decoded locally (doesn't need network trip) so valuable for microservices
+  - Thus can not be revoked => Keep TTL (Time To Live) fairly short
   - Has 3 sections: `header.payload.signature`
 
     - Header: algorithm for signing
@@ -514,10 +511,10 @@
 
   - TLS (Transport Layer Security)
 
-    - Successor of SSL (Secure Soccets Layer)
+    - Successor of SSL (Secure Sockets Layer)
     - Establishes encrypted http link between client and server (https)
     - Certificates prove identity
-    - TLS handshake: Client encrypt some data with **server's public key** and sends it to Server. Server mus be able de decrypt it using **its secret key**
+    - TLS handshake: Client encrypt some data with **server's public key** and sends it to Server. Server must be able de decrypt it using **its secret key**
     - One-way TLS (server validation)
       - Standard web https
       - Server presents certificate to prove identity, client does not (**Server Keystore**)
@@ -551,7 +548,7 @@
 
 - Data masking and private Variables
 
-  - blocks field bieng viewed in live trace or trace files
+  - blocks field being viewed in live trace or trace files
   - Data masking can be configured only by using the Management API (not the Management UI)
   - Can be configured to the Organization level or for a specific proxy
     - Organisation: **POST /v1/o/{org}/maskconfigs**
@@ -569,7 +566,7 @@
 
   - Storage for non-expiring data retrieved at runtime
   - Keys and Values must both be strings
-  - Can be scoped to Organization, an Environment or a specific Proxy (typically Environment-scoped)
+  - Can be scoped to an Organization, an Environment or a specific Proxy (typically Environment-scoped)
   - Read/Update/Delete KVM entries via
     - Management API
     - Management UI
