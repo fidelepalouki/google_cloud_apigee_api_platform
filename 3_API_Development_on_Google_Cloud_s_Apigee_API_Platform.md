@@ -110,6 +110,201 @@
       - Bsest practice is to allow approved operations
 
 - Extensions
+
   - Stores and manages service credentials
   - Retrieves tokens and manages token expiration
   - Builds and parses the API request and response
+
+- Apigee components
+
+  - Gateway
+    - Router
+    - Message Processor
+  - Runtime Data Store
+  - Analytics services
+  - Management service (API)
+  - Management UI
+  - Developer Portal
+
+- Rate Limiting with Spike Arrests and Quotas
+
+  - Traffic spikes
+    - SpikeArrest policy
+      - Keeps track of when the last matching request was allowed
+      - Does not use au counter
+      - Solves a technical problem
+      - Rejected traffic returns **429 Too Many Requests** status code
+      - The variable "system.uuid" is unique for each message processor. This value can be specified in a response header if you want to be able to distinguish requests that are handled by different message processors.
+      - SpikeArrest
+        - Rate (10ps, 30pm)
+        - Identifier ref = client_id
+        - MessageWeight
+        - UseEffectiveCount = true divides the specified rate accros MPs(Message processors). Default is false
+  - Quotas
+
+    - Quota policy
+
+      - Solves a business problem
+      - Uses a counter
+      - Count is typically shared among all message processors
+      - Quota is scoped to a single proxy and policy. Counters cannot be shared between proxies or policies
+      - Combination of proxy, policy and identifiers uniquely identifies a quota counter
+      - Rejected traffic returns **429 Too Many Requests** status code
+      - Quota
+        - Allow
+        - Interval
+        - TimeUnit
+        - Indentifier
+        - MessageWeight
+        - Distributed
+        - Synchronous
+        - AsynchronousConfiguration
+          - SyncIntervalInSeconds
+          - SyncMessageCount
+      - Quota can be set at the API Product level and accessed via variables created when an API key or token is verified (**verifyapikey.VK-VerifyKey.apiproduct.developer.quota.{limit, interval, timeunit}**)
+      - Quota type:
+        - default
+        - calendar
+        - flexi
+        - rollingwindow
+
+    - Reset Quota policy
+      - ResetQuota
+        - Quota
+          - Identifier
+            - Allow
+
+- Caching
+
+  - TTL (time-to-live)
+  - L1 cache
+    - in-memory
+    - is checked first
+  - L2 cache
+
+    - stored in runtime data store
+    - slower than L1 but much faster than network calls
+    - MP populates L1 cache when entry is read from L2
+
+  - L1 automatic caching (180s after access)
+
+    - OAuth access tokens
+    - Developers, Developers apps, API products
+    - Custom attributes on the aforementioned
+
+  - PopulateCache policy
+
+    - adds an entry to the cache
+    - PopulateCache
+      - CacheResource
+      - CacheKey
+        - Prefix
+        - KeyFragment
+      - Scope (must be set if Cache prefix is not set)
+        - Global: org\_\_env
+        - Application: org**env**proxy
+        - Exclusive: org**env**proxy\_\_endpoint
+      - ExpirySettings
+        - TimeoutInSec / ExpiryDate / TimeOfDay
+      - Source
+
+  - LookupCache policy
+
+    - looks for an entry in a cache
+    - cachehit variable is populated (true/false)
+    - LookupCache
+      - CacheResource
+      - CacheKey
+        - Prefix
+        - KeyFragment
+      - Scope (must be set if Cache prefix is not set)
+        - Global: org\_\_env
+        - Application: org**env**proxy
+        - Exclusive: org**env**proxy\_\_endpoint
+      - CacheLookupTimeoutInSeconds (default: 30s)
+      - AssignTo
+
+  - InvalidateCache policy
+
+    - purge entries from a caches
+    - InvalidateCache
+      - CacheResource
+      - CacheKey
+        - KeyFragment
+      - Scope (must be set if Cache prefix is not set)
+        - Global: org\_\_env
+        - Application: org**env**proxy
+        - Exclusive: org**env**proxy\_\_endpoint
+      - CacheContext
+        - APIProxyName / ProxyName(endpoint) / TargetName
+      - PurgeChildEntries
+
+  - Response caching
+
+    - ResponseCache policy
+
+      - streamlines the process of caching HTTP responses
+      - handle both the lookup and the population of the cache
+      - is attached to exactly 2 places: a request flow (checks the cache) and a response flow (populates the cache)
+
+      - ResponseCache
+        - CacheResource
+        - CacheKey
+          - KeyFragment
+        - ExpirySettings
+          - TimeoutInSec / ExpiryDate / TimeOfDay
+        - UseAcceptHeader
+        - ExcludeErrorResponse
+        - SkipCacheLookup
+        - SkipCachePopulation
+        - UseResponseCacheHeaders
+          - If true caching-related headers in the response will be used with this precedence:
+            1. Cache-Control s-max-age
+            2. Cache-Control max-age
+            3. Expires
+          - If one of those headers is used, its expiration is compared to the _ExpirySettings_ value, and the lower expiration time is used
+
+    - Response cache best practices:
+      - Only cache GET requests
+      - Think carefully about cache key fragments
+      - Use unique user identifier as a key fragment
+      - Use proxy.pathsuffix and specific query parameters as key fragments instead of entire URL
+
+- API Publishing
+
+  - API versionning
+  - Developer Portals
+
+- Logging
+
+  - MessageLogging policy
+    - continueOnError=true
+    - in the PostClientFlow
+    - MessageLogging
+      - Syslog
+        - Message
+        - Host
+        - Port
+        - Protocol (TCP/UDP)
+        - SSLInfo (if TCP)
+          - Enabled
+
+- Analytics
+
+  - App analytics
+  - Developer analytics
+  - API analytics
+  - StatisticsCollector policy
+    - StatisticsCollector
+      - Statistics
+        - Statistic (name, ref, type)
+
+- CI/CD
+  - Maven plugins
+    - apigee-deploy-maven-plugin
+    - apigee-config-maven-plugin
+  - CLI tool
+    - apigeetool
+  - Management API
+    - CLI get_token
+    - CLI acurl
