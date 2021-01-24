@@ -1,6 +1,6 @@
-# API Fundamentals
+## API Fundamentals
 
-## New challenges (Connected digital experiences)
+### New challenges (Connected digital experiences)
 
 - Secure
 - Scale
@@ -8,26 +8,26 @@
 - Analyze
 - Connect
 
-## Apigee API Management platform
+### Apigee API Management platform
 
 ![](img/apigee_core.PNG)
 
-## Flex deployment
+### Flex deployment
 
 ![](img/flex.PNG)
 
-## API lifecycle
+### API lifecycle
 
 ![](img/lifecycle.PNG)
 
-## Open API 3.0 (yaml)
+### Open API 3.0 (yaml)
 
-## API Proxy
+### API Proxy
 
 - Proxy Endpoint
 - Target Endpoint
 
-## Multi-tenancy
+### Multi-tenancy
 
 - Virtual hosts:
 
@@ -52,23 +52,23 @@
     - Algorithmn (RoundRobin, LeastConnection ...)
     - Server (1 or more)
     - MaxFailures
-  - ## HealthMonitor (if using MaxFailures)
+  - ### HealthMonitor (if using MaxFailures)
 
-# Dev
+## Dev
 
 - Developers
 - Apps
 - Products
 - API keys
 
-## API Product
+### API Product
 
 - API Product: bundle of APIs
 - Control access to APIs
 - Use for access or service levels
 -
 
-## Status codes
+### Status codes
 
 - **200**: 0K
 - **400**: Bad Request
@@ -78,7 +78,7 @@
 - **429**: Too Many Requests
 - **500**: Internal Server Error
 
-## Other status codes
+### Other status codes
 
 - **201**: Created
 - **204**: No Content
@@ -88,7 +88,7 @@
 - **409**: Conflict
 - **503**: Service Unavaiable
 
-## Status code ranges
+### Status code ranges
 
 - **1xx**: Informational
 - **2xx**: Success

@@ -1,11 +1,11 @@
-# API Security
+## API Security
 
-## Security concerns
+### Security concerns
 
 - Public APIs
 - Private APIs
 
-## Concerns
+### Concerns
 
 - Rate limiting
   - Spike arrest policy
@@ -37,7 +37,7 @@
 - Traffic management: Bot detection
   - Apigee Sense
 
-## Identity, Authentification and Authorization
+### Identity, Authentification and Authorization
 
 - Identity tracking
   - Tracking usage/access
@@ -60,7 +60,7 @@
 
 ![](img/identity_authentification_authorization.PNG)
 
-## OAuth
+### OAuth
 
 - OAuth: An **authorization framework** that **allows users or clients** to **grant access to server resources** to another entity **without sharing credentials**
 
@@ -403,14 +403,14 @@
   ```bash
     echo -n "username:password" | base64
   ```
-- ## Scopes: limit access for a given token
+- ### Scopes: limit access for a given token
 - TLS: All OAuth 2.0 traffic must be sent encrypted via TLS (successor of SSL)
 
 - Types of Apps:
   - Confidential or Public
   - Trusted or Untrusted
 
-## JWT, JWS, SAML, OpenID Connect
+### JWT, JWS, SAML, OpenID Connect
 
 - JWT (JSON Web Token)
 
@@ -489,7 +489,7 @@
       - ID tokens can be used to verify the authentification of users and get user details without contacting the issuer
       - Apigee's **JWT** and **OAuthV2** policies can be used to create OIDC providers and consumers
 
-## Content based attacks
+### Content based attacks
 
 - Input validation:
 
@@ -532,7 +532,7 @@
     - Allows/Deny list for IPs addresses or ranges
     - AccessControl policy
 
-## Apigee Management Security
+### Apigee Management Security
 
 - Role-Based Access Control (RBAC)
 

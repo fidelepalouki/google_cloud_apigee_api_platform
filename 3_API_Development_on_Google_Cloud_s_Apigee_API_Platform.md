@@ -1,4 +1,4 @@
-# Topics
+## Topics
 
 - API mediation
 - Traffic management
@@ -7,7 +7,7 @@
 - Apigee offline development
 - Apigee deployment options
 
-# API mediation
+## API mediation
 
 - Set Content-Type header
 - JSONToXML and XMLToJSON policies (JSON: Javascript Object Notation, XML: eXtensible Markup Language)
